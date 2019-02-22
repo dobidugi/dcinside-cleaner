@@ -1,4 +1,3 @@
 from login import main as login
 
-
-login("1234","5555")
+login("fakemarine","1234a")
