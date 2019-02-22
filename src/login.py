@@ -62,4 +62,4 @@ def main(id,password):
     csrf = getCSRFtoken()
     block_key = getBlockKey(csrf)
     cookies = login(id,password,block_key)
-    return cookies
+    return cookies, id
