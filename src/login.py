@@ -46,7 +46,6 @@ def login(id,pw,block_key):
     url = "https://dcid.dcinside.com/join/mobile_login_ok_new.php"
     res = requests.post(url,headers=_hd,data=_payload)
     loginchk(res,block_key)
-        
     return res.headers["Set-Cookie"]
 
 def loginchk(res,block_key):
@@ -62,5 +61,5 @@ def loginchk(res,block_key):
 def main(id,password):
     csrf = getCSRFtoken()
     block_key = getBlockKey(csrf)
-    headers = login(id,password,block_key)
-    return headers
+    cookies = login(id,password,block_key)
+    return cookies

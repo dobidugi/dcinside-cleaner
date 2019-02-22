@@ -1,3 +1,7 @@
 from login import main as login
+from parselist import main as parse
 
-headers = login("fakemarine","1234a")
+id = input("ID : ")
+pw = input("PASS : ")
+headers = login(id,pw)
+parse(headers)
