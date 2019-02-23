@@ -52,11 +52,8 @@ def loginchk(res,block_key):
     if(len(res.text) == 226):
         print("로그인 성공")
     else:
-        print("아이디 또는 비밀번호를 다시한번 확인해주세요.")
-        print("5회이상 오류시 홈페이지에서 직접 풀어주셔야합니다.")
-        id = input("ID : ")
-        pw = input("PASS : ")
-        main(id,pw)
+        print("로그인 실패")
+        exit(1)
 
 def main(id,password):
     csrf = getCSRFtoken()

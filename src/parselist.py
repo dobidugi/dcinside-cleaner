@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from time import sleep
 
 def appendlist(tag,list):
     for v in tag:
@@ -14,6 +15,7 @@ def getcommentlist(id,cookies):
     commentlist = list()
     page=1
     while True:
+        sleep(0.05)
         url = "http://m.dcinside.com/gallog/%s?menu=R&page=%d" %(id,page)
         res = requests.get(url,headers=_hd)
         html = res.text
@@ -33,8 +35,9 @@ def getpostlist(id,cookies):
     postlist = list()
     page=1
     while True:
+        sleep(0.03)
         url = "http://m.dcinside.com/gallog/%s?menu=G&page=%d" %(id,page)
-        res = requests.get(url,headers=_hd)
+        res = requests.get(url,headers=_hd,timeout=3)
         html = res.text
         soup = BeautifulSoup(html,"lxml")
         tag  = soup.find_all("a",{"class" : "del-rt"})
