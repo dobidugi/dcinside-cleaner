@@ -6,7 +6,7 @@ def getCSRFtoken(id,cookies,c):
     _hd = {
         "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
         "Cookie" : cookies,
-        "Upgrade-Insecure-Requests" : "1"
+        "Referer" : "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c),
     }
 
     url = "http://m.dcinside.com/gallog/%s?menu=%s" % (id,c)
@@ -39,7 +39,7 @@ def deletereq(id,cookies,block_key,csrf,v,c):
         "Referer" : "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c),
         "X-CSRF-TOKEN" : csrf,
         "X-Requested-With" : "XMLHttpRequest",
-        "Cookie" : cookies
+        "Cookie" : cookies + "m_dcinside_lately=programming;m_gallog_lately=%s;m_gallog_%s=%s" % (id,id,id)
     }
     _payload = {
         "con_key" : block_key,

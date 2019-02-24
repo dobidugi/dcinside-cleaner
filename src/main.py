@@ -24,3 +24,4 @@ elif(num==2):
 elif(num==3):
     cmtlist, pstlist = parse(id,cookies,num)
     delete(id,cookies,"R",cmtlist=cmtlist,pstlist=pstlist)
+end = input()
