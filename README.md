@@ -18,14 +18,14 @@ or
 exefile 폴더 안에 main.exe를 이용해 실행
 
 
-[img2](./resource/img2.png)
+![img2](./resource/img2.png)
 
 
 --------------------------------------------
 
 ## 동작화면
 
-[img1](./resource/img.png)
+![img1](./resource/img.png)
 
 
 -------------------------------------------
