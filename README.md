@@ -13,7 +13,7 @@ or
 
 #### **exe파일로 실행**
 
-파일 다운받기 : <http://naver.com>
+파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.1>
 
 exefile 폴더 안에 main.exe를 이용해 실행
 
