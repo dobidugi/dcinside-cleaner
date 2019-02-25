@@ -1,6 +1,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup
+from time import sleep
 
 def getCSRFtoken(id,cookies,c):
     _hd = {
@@ -53,14 +54,23 @@ def deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount):
     CountDel = CountDel + 1
 
 
-def deletelist(id,cookies,lists,c):
-    CountDel = 0
+def deletelist(id,cookies,lists,c,CountDel=0,AllCount=0):
     AllCount = len(lists)
     for v in lists:
         CountDel = CountDel + 1 
         csrf = getCSRFtoken(id,cookies,c)
         block_key = getBlockKey(id,cookies,csrf,c)
-        deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
+        try:
+            deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
+        except:
+            print("차단방지를위해 위해 30초후 자동재시작됩니다.")
+            sleep(30)
+            try:
+                deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
+            except:
+                print("차단방지를위해 위해 30초후 자동재시작됩니다.")
+                sleep(30)
+                deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
     CountDel = 0
     AllCount = 0 
 
@@ -89,20 +99,20 @@ def main(id,cookies,c,cmtlist="",pstlist=""):
         print("총 댓글 갯수 : %d" % returnlistcnt(cmtlist))
         askstart()
         print("댓글삭제시작")
-        deletelist(id,cookies,cmtlist,c)
+        deletelist(id,cookies,cmtlist,c,0,0)
         endtalk()
     elif(cmtlist==""):
         print("총 작성글 갯수 : %d" % returnlistcnt(pstlist))
         askstart()
         print("작성글삭제시작")
-        deletelist(id,cookies,pstlist,c)
+        deletelist(id,cookies,pstlist,c,0,0)
         endtalk()
     else:
         print("총 댓글 갯수 : %d" % returnlistcnt(cmtlist))
         print("총 작성글 갯수 : %d" % returnlistcnt(pstlist))
         askstart()
         print("댓글삭제시작")
-        deletelist(id,cookies,cmtlist,c)
+        deletelist(id,cookies,cmtlist,c,0,0)
         c="G"
         print("")
         print("작성글삭제시작")

@@ -13,7 +13,7 @@ or
 
 #### **exe파일로 실행**
 
-파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.2>
+파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.3>
 
 exefile 폴더 안에 main.exe를 이용해 실행
 
@@ -33,6 +33,7 @@ exefile 폴더 안에 main.exe를 이용해 실행
 ###  **ToDo**
  -  **2019. 2. 22 정상작동**
  -  **2019. 2. 23 리스트뽑아오는 방식 변경, 진행상황 출력변경(v0.2)**
+ -  **2019. 2. 23 삭제중 멈춤현상 일부 개선완료(v0.3)**
 
 
 -------------------------------------------
