@@ -33,7 +33,7 @@ def getBlockKey(id,cookies,csrf,c):
     data = res.json()
     return data['Block_key']
 
-def deletereq(id,cookies,block_key,csrf,v,c):
+def deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount):
     _hd = {
         "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
         "Referer" : "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c),
@@ -48,14 +48,21 @@ def deletereq(id,cookies,block_key,csrf,v,c):
     }
 
     url = "https://m.dcinside.com/gallog/log-del"
-    res = requests.post(url,data=_payload,headers=_hd)
-    print(res.text)
+    requests.post(url,data=_payload,headers=_hd)
+    print("%d / %d" %(CountDel,AllCount))
+    CountDel = CountDel + 1
+
 
 def deletelist(id,cookies,lists,c):
+    CountDel = 0
+    AllCount = len(lists)
     for v in lists:
+        CountDel = CountDel + 1 
         csrf = getCSRFtoken(id,cookies,c)
         block_key = getBlockKey(id,cookies,csrf,c)
-        deletereq(id,cookies,block_key,csrf,v,c)
+        deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
+    CountDel = 0
+    AllCount = 0 
 
 def askstart():
     print("")
@@ -81,18 +88,23 @@ def main(id,cookies,c,cmtlist="",pstlist=""):
     if(pstlist==""):
         print("총 댓글 갯수 : %d" % returnlistcnt(cmtlist))
         askstart()
+        print("댓글삭제시작")
         deletelist(id,cookies,cmtlist,c)
         endtalk()
     elif(cmtlist==""):
         print("총 작성글 갯수 : %d" % returnlistcnt(pstlist))
         askstart()
+        print("작성글삭제시작")
         deletelist(id,cookies,pstlist,c)
         endtalk()
     else:
         print("총 댓글 갯수 : %d" % returnlistcnt(cmtlist))
         print("총 작성글 갯수 : %d" % returnlistcnt(pstlist))
         askstart()
+        print("댓글삭제시작")
         deletelist(id,cookies,cmtlist,c)
         c="G"
+        print("")
+        print("작성글삭제시작")
         deletelist(id,cookies,pstlist,c)
         endtalk()

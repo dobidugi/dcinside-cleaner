@@ -1,60 +1,64 @@
 import requests
 from bs4 import BeautifulSoup
-from time import sleep
 
-def appendlist(tag,list):
-    for v in tag:
-        list.append(v.get("no"))
+def appendlist(data,list):
+    for v in data['gallog_list']['data']:
+        list.append(v['no'])
     return list
 
-def getcommentlist(id,cookies):
+def getCSRFtoken(id,cookies,c):
     _hd = {
         "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
-        "Cookie" :  cookies
+        "Cookie" : cookies
     }
-    commentlist = list()
-    page=1
-    while True:
-        sleep(0.05)
-        url = "http://m.dcinside.com/gallog/%s?menu=R&page=%d" %(id,page)
-        res = requests.get(url,headers=_hd)
-        html = res.text
-        soup = BeautifulSoup(html,"lxml")
-        tag  = soup.find_all("a",{"class" : "del-rt"})
-        if not tag:
-            break
-        commentlist = appendlist(tag,commentlist)
-        page = page + 1
-    return commentlist
 
-def getpostlist(id,cookies):
-    _hd = {
-        "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
-        "Cookie" :  cookies
-    }
-    postlist = list()
-    page=1
-    while True:
-        sleep(0.03)
-        url = "http://m.dcinside.com/gallog/%s?menu=G&page=%d" %(id,page)
-        res = requests.get(url,headers=_hd,timeout=3)
-        html = res.text
-        soup = BeautifulSoup(html,"lxml")
-        tag  = soup.find_all("a",{"class" : "del-rt"})
-        if not tag:
+    url = "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c)
+    res = requests.get(url=url,headers=_hd)
+    html = res.text
+    soup = BeautifulSoup(html, 'lxml')
+    csrf = soup.find_all("meta",{"name" : "csrf-token"}) # get csrf token
+    return csrf[0].get("content")
+
+def getlist(id,cookies,c):
+    returnlist = list()
+    csrf = getCSRFtoken(id,cookies,c)
+    page = 1
+    nowPage = "https://m.dcinside.com/gallog/%s?menu=%s&page=1" %(id,c)
+    while(1):
+        _hd = {
+            "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
+            "Cookie" :  cookies,
+            "Referer" : "https://m.dcinside.com/gallog/%s?menu=%s&page=%s" % (id,c,page),
+            "X-TOKEN-CSRF" : csrf,
+            "X-Requested-With" : "XMLHttpRequest"
+        }
+        url = "https://m.dcinside.com/ajax/response-galloglist"
+        _payload = {
+            "g_id" : id,
+            "menu" : c,
+            "page" : page,
+            "list_more" : "1",
+        }
+        res = requests.post(url,data=_payload,headers=_hd)
+        data = res.json()
+        appendlist(data,returnlist)
+        nowPage = "http://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page)
+        snowPage = "http://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page) # last_page_url에서 뱉는값이  https 일때 가정
+        endPage = data['gallog_list']['last_page_url']
+        if((nowPage == endPage) or (snowPage == endPage)):
             break
-        postlist = appendlist(tag,postlist)
-        page = page + 1
-    return postlist
-    
+        else:
+            page = page + 1
+    return returnlist
+
 def main(id,cookies,num):
     if(num==1):
-        commentlist = getcommentlist(id,cookies)
+        commentlist = getlist(id,cookies,"R")
         return commentlist
     elif(num==2):
-        postlist = getpostlist(id,cookies)
+        postlist = getlist(id,cookies,"G")
         return postlist
     elif(num==3):
-        commentlist = getcommentlist(id,cookies)
-        postlist = getpostlist(id,cookies)
+        commentlist = getlist(id,cookies,"R")
+        postlist = getlist(id,cookies,"G")
         return commentlist, postlist

@@ -13,7 +13,7 @@ or
 
 #### **exe파일로 실행**
 
-파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.1>
+파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.2>
 
 exefile 폴더 안에 main.exe를 이용해 실행
 
@@ -25,13 +25,14 @@ exefile 폴더 안에 main.exe를 이용해 실행
 
 ## 동작화면
 
-![img1](./resource/img.png)
+![img1](./resource/img3.png)
 
 
 -------------------------------------------
 
 ###  **ToDo**
  -  **2019. 2. 22 정상작동**
+ -  **2019. 2. 23 리스트뽑아오는 방식 변경, 진행상황 출력변경(v0.2)**
 
 
 -------------------------------------------
