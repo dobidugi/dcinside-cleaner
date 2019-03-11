@@ -43,7 +43,7 @@ def getlist(id,cookies,c):
         data = res.json()
         appendlist(data,returnlist)
         nowPage = "http://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page)
-        snowPage = "http://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page) # last_page_url에서 뱉는값이  https 일때 가정
+        snowPage = "https://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page) # last_page_url에서 뱉는값이  https 일때 가정\)
         endPage = data['gallog_list']['last_page_url']
         if((nowPage == endPage) or (snowPage == endPage)):
             break

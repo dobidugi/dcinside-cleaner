@@ -75,9 +75,10 @@ def deletelist(id,cookies,lists,c,CountDel=0,AllCount=0):
     AllCount = 0 
 
 def askstart():
-    print("")
-    print("작업을 진행하시려면 1번을 입력후 엔터를 눌러주세요")
-    print("작업을 진행하지않으려면 2번을 입력후 엔터를 눌러주세요")
+    print("========================================")
+    print("작업을 진행할까요?")
+    print("I 진행")
+    print("II 취소")
     answer = int(input("입력 : "))
     print("")
     print("작업이 시작됬습니다 잠시만 기다려주세요")
@@ -85,7 +86,7 @@ def askstart():
         exit(1)
 
 def endtalk():
-    print("")
+    print("========================================")
     print("요청하신 작업이 모두 끝났습니다")
     print("남아있는 글이나 댓글이 있을시 다시한번 돌려주세요")
 
