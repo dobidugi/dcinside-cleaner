@@ -82,13 +82,20 @@ def askstart():
     answer = int(input("입력 : "))
     print("")
     print("작업이 시작됬습니다 잠시만 기다려주세요")
+    print("========================================")
     if(answer==2):
-        exit(1)
+        exit(0)
 
 def endtalk():
     print("========================================")
     print("요청하신 작업이 모두 끝났습니다")
     print("남아있는 글이나 댓글이 있을시 다시한번 돌려주세요")
+    print("1. 프로그램종료")
+    print("2. 추가진행")
+    sel = int(input("입력  : "))
+    print("========================================")
+    if(sel == 1 ):
+        exit(0)
 
 def returnlistcnt(list):
     return len(list)
