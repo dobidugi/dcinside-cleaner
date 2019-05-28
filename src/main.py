@@ -19,11 +19,10 @@ def NormalDel():
     num = ProcessSelect()
     if(num==1):
         cmtlist = parse(id,cookies,num)
-        #delete(id,pw,cmtlist=cmtlist)
+        delete(id,pw,"comment_del",cmtlist=cmtlist)
     elif(num==2):
         pstlist = parse(id,cookies,num)
-        print(pstlist)
-        #delete(id,pw,pstlist=pstlist)
+        delete(id,pw,"board_del",pstlist=pstlist)
 
     elif(num==3):
         cmtlist, pstlist = parse(id,cookies,num)

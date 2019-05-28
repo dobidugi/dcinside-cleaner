@@ -19,7 +19,7 @@ def getgallname(id,code,csrf):
 def appendlist(id,data,list,csrf):
     for v in data['gallog_list']['data']:
         gall_name = getgallname(id,v['cid'],csrf)  # 갤코드를 갤이름으로변환
-        list.append(v['no']+","+gall_name) # [글번호,갤이름] 으로 저장됌
+        list.append(v['pno']+","+gall_name) # [글번호,갤이름] 으로 저장됌
     return list
 
 def getCSRFtoken(id,cookies,c):

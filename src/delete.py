@@ -1,76 +1,92 @@
 import requests
 import json
+import hashlib
 from bs4 import BeautifulSoup
 from time import sleep
+from datetime import datetime
 
-def getCSRFtoken(id,cookies,c):
+def getUserid(user_id,user_pw):
+    _url = "https://dcid.dcinside.com/join/mobile_app_login.php"
+    _hd  = {
+    "User-agent" : "dcinside.app",
+    "Referer" : "http://www.dcinside.com"
+    }
+    _data = {
+        "user_id" : user_id,
+        "user_pw" : user_pw
+    }
+    req = requests.post(url=_url,headers=_hd,data=_data)
+    data = req.json()
+    return data[0]["user_id"]
+
+def getVersion():
+    _url = "http://json2.dcinside.com/json0/app_check_A_rina.php"
+    _hd  = {
+    "User-agent" : "dcinside.app",
+    "Referer" : "http://www.dcinside.com"
+    }
+    req = requests.get(url=_url,headers=_hd)
+    data = req.json()
+    return data[0]['ver']
+
+def hashValueToken():
+    now = datetime.now()
+    str1 = "dcArdchk_%04d%02d%02d%02d" % (now.year,now.month,now.day,now.hour)
+    data = hashlib.sha256(str1.encode()).hexdigest()
+    return data
+
+def getAppid():
+    value_token = hashValueToken()
+    version = getVersion()
+    _url = "https://dcid.dcinside.com/join/mobile_app_key_verification_3rd.php"
+    _hd  = {
+    "User-agent" : "dcinside.app",
+    "Referer" : "http://www.dcinside.com"
+    }
+    _data = {
+    "value_token" : value_token,
+    "signature" : "ReOo4u96nnv8Njd7707KpYiIVYQ3FlcKHDJE046Pg6s=",
+    "pkg" : "com.dcinside.app",
+    "vCode" : "30037",
+    "vName" : version
+    }
+
+    req = requests.post(url=_url,headers=_hd,data=_data)
+    data = req.json()
+    return data[0]["app_id"]
+
+
+
+def deletereq(id,app_id,user_id,v,c,CountDel,AllCount):
+    data = v.split(",")
+    _url = "http://app.dcinside.com/api/gall_del.php"
     _hd = {
-        "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
-        "Cookie" : cookies,
-        "Referer" : "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c),
+        "User-agent" : "dcinside.app",
+        "Referer" : "http://www.dcinside.com"
     }
-
-    url = "http://m.dcinside.com/gallog/%s?menu=%s" % (id,c)
-    res = requests.get(url=url,headers=_hd)
-    html = res.text
-    soup = BeautifulSoup(html, 'lxml')
-    csrf = soup.find_all("meta",{"name" : "csrf-token"}) # get csrf token
-    return csrf[0].get("content")
-
-def getBlockKey(id,cookies,csrf,c):
-    _hd = {
-        "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
-        "Referer" : "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c),
-        "X-CSRF-TOKEN" : csrf,
-        "X-Requested-With" : "XMLHttpRequest",
-        "Cookie" : cookies,
+    _data = {
+        "user_id" : user_id,
+        "id" : data[1],
+        "no" : data[0],
+        "mode" : c,
+        "app_id" : app_id
     }
-    _payload = {
-        "token_verify" : "gallogDel"
-    }
-
-    url = "https://m.dcinside.com/ajax/access"
-    res = requests.post(url,data=_payload,headers=_hd)
-    data = res.json()
-    return data['Block_key']
-
-def deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount):
-    _hd = {
-        "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
-        "Referer" : "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c),
-        "X-CSRF-TOKEN" : csrf,
-        "X-Requested-With" : "XMLHttpRequest",
-        "Cookie" : cookies + "m_dcinside_lately=programming;m_gallog_lately=%s;m_gallog_%s=%s" % (id,id,id)
-    }
-    _payload = {
-        "con_key" : block_key,
-        "g_id" : id,
-        "no" : v   
-    }
-
-    url = "https://m.dcinside.com/gallog/log-del"
-    requests.post(url,data=_payload,headers=_hd)
+    requests.post(url=_url,headers=_hd,data=_data)
     print("%d / %d" %(CountDel,AllCount))
     CountDel = CountDel + 1
 
 
-def deletelist(id,cookies,lists,c,CountDel=0,AllCount=0):
+def deletelist(id,pw,lists,c,CountDel=0,AllCount=0):
     AllCount = len(lists)
+    user_id = getUserid(id,pw)
+    app_id = getAppid()
     for v in lists:
         CountDel = CountDel + 1 
-        csrf = getCSRFtoken(id,cookies,c)
-        block_key = getBlockKey(id,cookies,csrf,c)
         try:
-            deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
+            deletereq(id,app_id,user_id,v,c,CountDel,AllCount)
         except:
-            print("차단방지를위해 위해 30초후 자동재시작됩니다.")
-            sleep(30)
-            try:
-                deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
-            except:
-                print("차단방지를위해 위해 30초후 자동재시작됩니다.")
-                sleep(30)
-                deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
+            print("차단먹혔습니다 잠시후 10초후 다시실행합니다")
+            sleep(10)
     CountDel = 0
     AllCount = 0 
 
@@ -100,29 +116,28 @@ def endtalk():
 def returnlistcnt(list):
     return len(list)
 
-def main(id,cookies,c,cmtlist="",pstlist=""):
+def main(id,pw,c,cmtlist="",pstlist=""):
     print("수집이 완료되었습니다")
     print("갯수가 맞지않는다면 작업진행후 한번더다시 반복해주세요")
     if(pstlist==""):
         print("총 댓글 갯수 : %d" % returnlistcnt(cmtlist))
         askstart()
         print("댓글삭제시작")
-        deletelist(id,cookies,cmtlist,c,0,0)
+        deletelist(id,pw,cmtlist,c,0,0)
         endtalk()
     elif(cmtlist==""):
         print("총 작성글 갯수 : %d" % returnlistcnt(pstlist))
         askstart()
         print("작성글삭제시작")
-        deletelist(id,cookies,pstlist,c,0,0)
+        deletelist(id,pw,pstlist,c,0,0)
         endtalk()
     else:
         print("총 댓글 갯수 : %d" % returnlistcnt(cmtlist))
         print("총 작성글 갯수 : %d" % returnlistcnt(pstlist))
         askstart()
         print("댓글삭제시작")
-        deletelist(id,cookies,cmtlist,c,0,0)
-        c="G"
+        deletelist(id,pw,cmtlist,c,0,0)
         print("")
         print("작성글삭제시작")
-        deletelist(id,cookies,pstlist,c)
+        deletelist(id,pw,pstlist,c,0,0)
         endtalk()
