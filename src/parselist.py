@@ -12,7 +12,7 @@ def getCSRFtoken(id,cookies,c):
         "Cookie" : cookies
     }
 
-    url = "https://m.dcinside.com/gallog/%s?menu=%s" % (id,c)
+    url = "https://m.dcinside.com/gallog/%s/menu=%s" % (id,c)
     res = requests.get(url=url,headers=_hd)
     html = res.text
     soup = BeautifulSoup(html, 'lxml')
@@ -54,12 +54,12 @@ def getlist(id,cookies,c):
 
 def main(id,cookies,num):
     if(num==1):
-        commentlist = getlist(id,cookies,"R")
+        commentlist = getlist(id,cookies,"R_all")
         return commentlist
     elif(num==2):
-        postlist = getlist(id,cookies,"G")
+        postlist = getlist(id,cookies,"G_all")
         return postlist
     elif(num==3):
-        commentlist = getlist(id,cookies,"R")
-        postlist = getlist(id,cookies,"G")
+        commentlist = getlist(id,cookies,"R_all")
+        postlist = getlist(id,cookies,"G_all")
         return commentlist, postlist

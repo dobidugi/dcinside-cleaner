@@ -7,7 +7,7 @@ def getCSRFtoken():
         "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36"
     }
 
-    url = "https://m.dcinside.com/auth/login?r_url=https%3A%2F%2Fm.dcinside.com%2Faside"
+    url = "http://m.dcinside.com/auth/login"
     res = requests.get(url=url,headers=_hd)
     html = res.text
     soup = BeautifulSoup(html, 'lxml')
@@ -41,7 +41,7 @@ def login(id,pw,block_key):
         "user_pw": pw,
         "id_chk": "on",
         "con_key": block_key,
-        "r_url": "https://m.dcinsidsse.com/" 
+        "r_url": "http://m.dcinsidsse.com/" 
     }
     url = "https://dcid.dcinside.com/join/mobile_login_ok_new.php"
     res = requests.post(url,headers=_hd,data=_payload)
