@@ -1,7 +1,6 @@
 from login import main as login
 from parselist import main as parse
 from delete import main as delete
-from divparselist import main as divparse
 from time import sleep
 
 
@@ -20,14 +19,15 @@ def NormalDel():
     num = ProcessSelect()
     if(num==1):
         cmtlist = parse(id,cookies,num)
-        #delete(id,cookies,"R",cmtlist=cmtlist)
+        #delete(id,pw,cmtlist=cmtlist)
     elif(num==2):
         pstlist = parse(id,cookies,num)
-        #delete(id,cookies,"G",pstlist=pstlist)
+        print(pstlist)
+        #delete(id,pw,pstlist=pstlist)
 
     elif(num==3):
         cmtlist, pstlist = parse(id,cookies,num)
-        #delete(id,cookies,"R",cmtlist=cmtlist,pstlist=pstlist)
+        #delete(id,pw,cmtlist=cmtlist,pstlist=pstlist)
 
 
 # programe start

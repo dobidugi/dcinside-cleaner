@@ -1,9 +1,25 @@
 import requests
 from bs4 import BeautifulSoup
 
-def appendlist(data,list):
+
+def getgallname(id,code,csrf):
+    _url = "https://m.dcinside.com/gallog/list-direct"
+    _hd = {
+        "User-agent" : "Mozilla/5.0 (Linux; Android 5.1.1; SM-G955N Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36",
+        "Referer" : "https://m.dcinside.com/gallog/%s" % (id),
+        "X-CSRF-TOKEN" : csrf
+    }
+    _data =  {
+        "gall_code" : code
+    }
+    req = requests.post(url=_url,headers=_hd,data=_data)
+    data = req.json()
+    return data["gall_id"]
+
+def appendlist(id,data,list,csrf):
     for v in data['gallog_list']['data']:
-        list.append(v['no'])
+        gall_name = getgallname(id,v['cid'],csrf)  # 갤코드를 갤이름으로변환
+        list.append(v['no']+","+gall_name) # [글번호,갤이름] 으로 저장됌
     return list
 
 def getCSRFtoken(id,cookies,c):
@@ -11,7 +27,6 @@ def getCSRFtoken(id,cookies,c):
         "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
         "Cookie" : cookies
     }
-
     url = "https://m.dcinside.com/gallog/%s/menu=%s" % (id,c)
     res = requests.get(url=url,headers=_hd)
     html = res.text
@@ -41,7 +56,7 @@ def getlist(id,cookies,c):
         }
         res = requests.post(url,data=_payload,headers=_hd)
         data = res.json()
-        appendlist(data,returnlist)
+        appendlist(id,data,returnlist,csrf)
         nowPage = "http://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page)
         snowPage = "https://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page) # last_page_url에서 뱉는값이  https 일때 가정\)
         endPage = data['gallog_list']['last_page_url']

@@ -65,6 +65,12 @@ def deletelist(id,cookies,lists,c,CountDel=0,AllCount=0):
         except:
             print("차단방지를위해 위해 30초후 자동재시작됩니다.")
             sleep(30)
+            try:
+                deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
+            except:
+                print("차단방지를위해 위해 30초후 자동재시작됩니다.")
+                sleep(30)
+                deletereq(id,cookies,block_key,csrf,v,c,CountDel,AllCount)
     CountDel = 0
     AllCount = 0 
 
