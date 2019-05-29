@@ -1,8 +1,9 @@
 import requests
+import json
 from bs4 import BeautifulSoup
 
 
-def getgallname(id,code,csrf):
+def getgallname(id,code,csrf): # gall_code를 gall_name으로 변환시키는 function 
     _url = "https://m.dcinside.com/gallog/list-direct"
     _hd = {
         "User-agent" : "Mozilla/5.0 (Linux; Android 5.1.1; SM-G955N Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36",
@@ -18,8 +19,10 @@ def getgallname(id,code,csrf):
 
 def appendlist(id,data,list,csrf):
     for v in data['gallog_list']['data']:
-        gall_name = getgallname(id,v['cid'],csrf)  # 갤코드를 갤이름으로변환
-        list.append(v['pno']+","+gall_name) # [글번호,갤이름] 으로 저장됌
+        gall_name = getgallname(id,v['cid'],csrf)  # gall_code를 gall_name으로 변환
+        list.append(v['pno']+","+gall_name+","+v['cno']) # [pno,gall_name,cno] 으로 저장됌
+        # pno = 댓글번호
+        # cno = 게시글 번호
     return list
 
 def getCSRFtoken(id,cookies,c):
@@ -67,14 +70,6 @@ def getlist(id,cookies,c):
             page = page + 1
     return returnlist
 
-def main(id,cookies,num):
-    if(num==1):
-        commentlist = getlist(id,cookies,"R_all")
-        return commentlist
-    elif(num==2):
-        postlist = getlist(id,cookies,"G_all")
-        return postlist
-    elif(num==3):
-        commentlist = getlist(id,cookies,"R_all")
-        postlist = getlist(id,cookies,"G_all")
-        return commentlist, postlist
+def main(id,cookies): 
+    commentlist = getlist(id,cookies,"R_all")
+    return commentlist

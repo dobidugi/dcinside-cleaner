@@ -1,5 +1,6 @@
 from login import main as login
-from parselist import main as parse
+from boardparselist import main as boardparse
+from commentparselist import main as commentparse
 from delete import main as delete
 from time import sleep
 
@@ -18,14 +19,16 @@ def ProcessSelect():
 def NormalDel():
     num = ProcessSelect()
     if(num==1):
-        cmtlist = parse(id,cookies,num)
-        delete(id,pw,"comment_del",cmtlist=cmtlist)
+        cmtlist = commentparse(id,cookies)
+        print(cmtlist)
+        #delete(id,pw,"comment_del",cmtlist=cmtlist)
     elif(num==2):
-        pstlist = parse(id,cookies,num)
+        pstlist = boardparse(id,cookies)
         delete(id,pw,"board_del",pstlist=pstlist)
 
     elif(num==3):
-        cmtlist, pstlist = parse(id,cookies,num)
+        print("none")
+        #cmtlist, pstlist = boardparse(id,cookies)
         #delete(id,pw,cmtlist=cmtlist,pstlist=pstlist)
 
 
