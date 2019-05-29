@@ -31,7 +31,7 @@ def getBlockKey(csrf):
     data = res.json()
     return data['Block_key']
     
-def login(id,pw,block_key):
+def login(id,pw,block_key,suslabel,wrlabel):
     _hd = {
         "User-Agent" : "Mozilla/5.0 (Linux; Android 4.4.2; Nexus 4 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.114 Mobile Safari/537.36",
         "Referer" : "http://m.dcinside.com/auth/login?r_url=http%3A%2F%2Fm.dcinside.com"
@@ -45,18 +45,18 @@ def login(id,pw,block_key):
     }
     url = "https://dcid.dcinside.com/join/mobile_login_ok_new.php"
     res = requests.post(url,headers=_hd,data=_payload)
-    loginchk(res,block_key)
+    loginchk(res,block_key,suslabel,wrlabel)
     return res.headers["Set-Cookie"]
 
-def loginchk(res,block_key):
+def loginchk(res,block_key,suslabel,wrlabel):
     if(len(res.text) == 226):
-        print("로그인 성공")
+        suslabel.setText("안녕하세요 피에로쨘 님")
+        wrlabel.setText("")
     else:
-        print("로그인 실패")
-        exit(1)
+        wrlabel.setText("아이디 패스워드를 다시 확인해주세요")
 
-def main(id,password):
+def main(id,password,suslabel,wrlabel):
     csrf = getCSRFtoken()
     block_key = getBlockKey(csrf)
-    cookies = login(id,password,block_key)
+    cookies = login(id,password,block_key,suslabel,wrlabel)
     return cookies, id

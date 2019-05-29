@@ -70,5 +70,5 @@ def getlist(id,cookies,c):
     return returnlist
 
 def main(id,cookies):
-    postlist = getlist(id,cookies,"R_all")
+    postlist = getlist(id,cookies,"G_all")
     return postlist
