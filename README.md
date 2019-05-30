@@ -16,23 +16,22 @@ or
 
 #### **exe파일로 실행**
 
-파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.5>
+파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.6>
 
 압축을 해재후 main 폴더 안에 main.exe를 이용해 실행
 
-![img3](./resource/img5.png)
+![img3](./resource/99.png)
 
 
-![img2](./resource/img2.png)
-
-
-* main 폴더 안에 main.exe이 작동하지않을경우 main_2폴더안 main.exe를 실행
 
 --------------------------------------------
 
 ## 동작화면
 
-![img1](./resource/img7.png)
+![img1](./resource/newlogin.gif)
+
+
+![img4](./resource/update+del.gif)
 
 
 -------------------------------------------
@@ -47,5 +46,9 @@ or
  -  **2019. 3. 12 정상작동(v0.4)**
  -  **2019. 3. 12 분할삭제모드 추가(v0.5)**
  -  **2019. 5. 19 디시 갤로그개편으로 마이너갤러리 삭제 지원**
+ -  **2019. 5. 30 v6.0 업데이트 !!**
+    **- CLI환경에서 GUI 환경으로 업그레이드**
+    **- 0.5버전에비해 삭제속도 20배증가**
 -------------------------------------------
-### 기타 문의사항이나 건의사항은 dobidugi@gmail.com 연락주세요
+### 기타 문의사항이나 건의사항은 카카오톡 플러스친구 @피에로 로 연락주세요
+### http://pf.kakao.com/_CxjluT
