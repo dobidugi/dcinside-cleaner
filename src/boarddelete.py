@@ -1,6 +1,7 @@
 import requests
 import json
 import hashlib
+import threading
 from bs4 import BeautifulSoup
 from time import sleep
 from datetime import datetime
@@ -16,7 +17,6 @@ def getUserid(user_id,user_pw):
         "user_pw" : user_pw
     }
     req = requests.post(url=_url,headers=_hd,data=_data)
-    print(req.text)
     data = req.json()
     return data[0]["user_id"]
 
@@ -58,7 +58,7 @@ def getAppid():
 
 
 
-def deletereq(id,app_id,user_id,v,CountDel,AllCount):
+def deletereq(id,app_id,user_id,v):
     data = v.split(",")
     _url = "http://app.dcinside.com/api/gall_del.php"
     _hd = {
@@ -72,56 +72,34 @@ def deletereq(id,app_id,user_id,v,CountDel,AllCount):
         "mode" : "board_del",
         "app_id" : app_id
     }
-    requests.post(url=_url,headers=_hd,data=_data)
-    print("%d / %d" %(CountDel,AllCount))
-    CountDel = CountDel + 1
+    try:
+        requests.post(url=_url,headers=_hd,data=_data)
+    except:
+        sleep(10)
 
 
-def deletelist(id,pw,lists,CountDel=0,AllCount=0):
-    AllCount = len(lists)
+
+
+def deletelist(id,pw,lists):
     user_id = getUserid(id,pw)
     app_id = getAppid()
     for v in lists:
-        CountDel = CountDel + 1 
         try:
-            deletereq(id,app_id,user_id,v,CountDel,AllCount)
+            deletereq(id,app_id,user_id,v)
         except:
             print("차단먹혔습니다 잠시후 10초후 다시실행합니다")
             sleep(10)
-    CountDel = 0
-    AllCount = 0 
 
-def askstart():
-    print("========================================")
-    print("작업을 진행할까요?")
-    print("I 진행")
-    print("II 취소")
-    answer = int(input("입력 : "))
-    print("")
-    print("작업이 시작됬습니다 잠시만 기다려주세요")
-    print("========================================")
-    if(answer==2):
-        exit(0)
-
-def endtalk():
-    print("========================================")
-    print("요청하신 작업이 모두 끝났습니다")
-    print("남아있는 글이나 댓글이 있을시 다시한번 돌려주세요")
-    print("1. 프로그램종료")
-    print("2. 추가진행")
-    sel = int(input("입력  : "))
-    print("========================================")
-    if(sel == 1 ):
-        exit(0)
 
 def returnlistcnt(list):
     return len(list)
 
-def main(id,pw,boardlist):
-    print("수집이 완료되었습니다")
-    print("갯수가 맞지않는다면 작업진행후 한번더다시 반복해주세요")
-    print("총 작성글 갯수 : %d" % returnlistcnt(boardlist))
-    askstart()
-    print("작성글삭제시작")
-    deletelist(id,pw,boardlist,0,0)
-    endtalk()
+def main(id,pw,boardlist,label):
+    label.setText("삭제중...")
+    deletelist(id,pw,boardlist)
+    onelist = boardlist[int((len(boardlist)/2)):]
+    twolist = boardlist[:int((len(boardlist)/2))]
+    t1 = threading.Thread(target=deletelist, args=(id,pw,onelist))
+    t1.start()
+    t2 = threading.Thread(target=deletelist, args=(id,pw,twolist))
+    t2.start()

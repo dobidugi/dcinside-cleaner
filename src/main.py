@@ -197,11 +197,21 @@ class Ui_Form(object):
 
     def deletestart(self):
         if self.pstflag == True: # 게시글 수집완료시
-            t = threading.Thread(target=boarddelete, args=(self.id,self.pw,self.pstlist))
+            t = threading.Thread(target=boarddelete, args=(self.id,self.pw,self.pstlist,self.warringlabel))
             t.start()
+            self.respst.setEnabled(True)
+            self.respst.setStyleSheet("background-color: rgb(74, 87, 168);\n"
+"color: rgb(254, 255, 255);\n"
+"font: 10pt  \"양재깨비체B\";\n"
+"")
         if self.cmtflag == True: # 댓글 수집완료시
-            t = threading.Thread(target=commentdelete, args=(self.id,self.pw,self.cmtlist))
+            t = threading.Thread(target=commentdelete, args=(self.id,self.pw,self.cmtlist,self.warringlabel))
             t.start()
+            self.restcmt.setEnabled(True)
+            self.restcmt.setStyleSheet("background-color: rgb(74, 87, 168);\n"
+"color: rgb(254, 255, 255);\n"
+"font: 10pt  \"양재깨비체B\";\n"
+"")
 
 def NormalDel():
     num = 0
