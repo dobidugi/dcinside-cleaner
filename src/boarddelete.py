@@ -16,6 +16,7 @@ def getUserid(user_id,user_pw):
         "user_pw" : user_pw
     }
     req = requests.post(url=_url,headers=_hd,data=_data)
+    print(req.text)
     data = req.json()
     return data[0]["user_id"]
 

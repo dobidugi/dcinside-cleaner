@@ -1,7 +1,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup
-
+from time import sleep
 
 def getgallname(id,code,csrf): # gall_code를 gall_name으로 변환시키는 function 
     _url = "https://m.dcinside.com/gallog/list-direct"
@@ -17,10 +17,15 @@ def getgallname(id,code,csrf): # gall_code를 gall_name으로 변환시키는 fu
     data = req.json()
     return data["gall_id"]
 
-def appendlist(id,data,list,csrf):
+def appendlist(id,data,list,csrf,gallcodedic):
     for v in data['gallog_list']['data']:
-        gall_name = getgallname(id,v['cid'],csrf)  # gall_code를 gall_name으로 변환
-        list.append(v['pno']+","+gall_name) # [pno,gall_name] 으로 저장됌
+        if v['cid'] in gallcodedic.keys(): # gallcode에 많은요청을보내면 차단을먹어 똑같은값보낼시 딕셔너리참고
+            list.append(v['pno']+","+gallcodedic[v['cid']]) # [pno,gall_name] 으로 저장됌
+        else:
+            gall_name = getgallname(id,v['cid'],csrf)  # gall_code를 gall_name으로 변환
+            sleep(1)
+            gallcodedic[v['cid']] = gall_name
+            list.append(v['pno']+","+gall_name) # [pno,gall_name] 으로 저장됌
         # pno : 게시글 번호
     return list
 
@@ -38,6 +43,7 @@ def getCSRFtoken(id,cookies,c):
 
 def getlist(id,cookies,c):
     returnlist = list()
+    gallcodedic = dict()
     csrf = getCSRFtoken(id,cookies,c)
     page = 1
     nowPage = "https://m.dcinside.com/gallog/%s?menu=%s&page=1" %(id,c)
@@ -58,11 +64,10 @@ def getlist(id,cookies,c):
         }
         res = requests.post(url,data=_payload,headers=_hd)
         data = res.json()
-        appendlist(id,data,returnlist,csrf)
+        appendlist(id,data,returnlist,csrf,gallcodedic)
         nowPage = "http://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page)
         snowPage = "https://m.dcinside.com/gallog/%s?menu=%s&page=%s" %(id,c,page) # last_page_url에서 뱉는값이  https 일때 가정\)
         endPage = data['gallog_list']['last_page_url']
-        print(nowPage)
         if((nowPage == endPage) or (snowPage == endPage)):
             break
         else:

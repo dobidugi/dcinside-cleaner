@@ -1,6 +1,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup
+from time import sleep
 
 def getCSRFtoken():
     _hd = {
@@ -45,15 +46,20 @@ def login(id,pw,block_key,suslabel,wrlabel):
     }
     url = "https://dcid.dcinside.com/join/mobile_login_ok_new.php"
     res = requests.post(url,headers=_hd,data=_payload)
-    loginchk(res,block_key,suslabel,wrlabel)
-    return res.headers["Set-Cookie"]
+    re = loginchk(res,block_key,suslabel,wrlabel)
+    if re == True:
+        return res.headers["Set-Cookie"]
+    elif re == False:
+        return False
 
 def loginchk(res,block_key,suslabel,wrlabel):
     if(len(res.text) == 226):
-        suslabel.setText("안녕하세요 피에로쨘 님")
-        wrlabel.setText("")
+        suslabel.setText("안녕하세요")
+        wrlabel.setText(" ")
+        return True
     else:
         wrlabel.setText("아이디 패스워드를 다시 확인해주세요")
+        return False
 
 def main(id,password,suslabel,wrlabel):
     csrf = getCSRFtoken()
