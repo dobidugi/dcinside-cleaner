@@ -25,13 +25,13 @@ class Ui_Form(object):
         Form.setStyleSheet("font: 9pt \"양재백두체B\";")
         self.lineEdit = QtWidgets.QLineEdit(Form)
         self.lineEdit.setGeometry(QtCore.QRect(10, 20, 171, 20))
-        self.lineEdit.setStyleSheet("font: 12pt \"양재깨비체B\";")
+        self.lineEdit.setStyleSheet("font: 12pt  ;")
         self.lineEdit.setInputMask("")
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
         self.lineEdit_2 = QtWidgets.QLineEdit(Form)
         self.lineEdit_2.setGeometry(QtCore.QRect(10, 50, 171, 20))
-        self.lineEdit_2.setStyleSheet("font: 12pt \"양재깨비체B\";")
+        self.lineEdit_2.setStyleSheet("font: 12pt  ;")
         self.lineEdit_2.setInputMask("")
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.lineEdit_2.setEchoMode(self.lineEdit_2.Password)
@@ -41,19 +41,19 @@ class Ui_Form(object):
         self.pushButton.clicked.connect(self.loginbtn)
         self.pushButton.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(224, 255, 255);\n"
-"font: 16pt  \"양재깨비체B\";\n"
+"font: 16pt   ;\n"
 "")
         self.pushButton.setCheckable(False)
         self.pushButton.setObjectName("pushButton")
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(90, 90, 56, 12))
-        self.label.setStyleSheet("font: 10pt \"양재깨비체B\";")
+        self.label.setStyleSheet("font: 10pt  ;")
         self.label.setTextFormat(QtCore.Qt.AutoText)
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(Form)
         self.label_2.setGeometry(QtCore.QRect(90, 110, 56, 12))
-        self.label_2.setStyleSheet("font: 10pt \"양재깨비체B\";")
+        self.label_2.setStyleSheet("font: 10pt  ;")
         self.label_2.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.label_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
@@ -62,30 +62,30 @@ class Ui_Form(object):
         self.pushButton_2.setGeometry(QtCore.QRect(10, 210, 261, 23))
         self.pushButton_2.setStyleSheet("background-color: rgb(254,255, 255);\n"
 "color: rgb(160, 160, 160);\n"
-"font: 13pt  \"양재깨비체B\";\n"
+"font: 13pt   ;\n"
 "")
         self.pushButton_2.clicked.connect(self.deletestart)
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.setEnabled(False)
         self.label_3 = QtWidgets.QLabel(Form)
         self.label_3.setGeometry(QtCore.QRect(10, 160, 261, 16))
-        self.label_3.setStyleSheet("font: 11pt \"양재깨비체B\";")
+        self.label_3.setStyleSheet("font: 11pt  ;")
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(Form)
         self.label_4.setGeometry(QtCore.QRect(10, 190, 261, 16))
-        self.label_4.setStyleSheet("font: 11pt \"양재깨비체B\";")
+        self.label_4.setStyleSheet("font: 11pt  ;")
         self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(Form)
         self.label_5.setGeometry(QtCore.QRect(10, 82, 91, 20))
-        self.label_5.setStyleSheet("font: 10pt \"양재깨비체B\";")
+        self.label_5.setStyleSheet("font: 10pt  ;")
         self.label_5.setObjectName("label_5")
         self.label_6 = QtWidgets.QLabel(Form)
         self.label_6.setGeometry(QtCore.QRect(10, 100, 81, 20))
-        self.label_6.setStyleSheet("font: 10pt \"양재깨비체B\";")
+        self.label_6.setStyleSheet("font: 10pt  ;")
         self.label_6.setObjectName("label_6")
         self.namelabel = QtWidgets.QLabel(Form)
         self.namelabel.setGeometry(QtCore.QRect(10, 130, 251, 16))
-        self.namelabel.setStyleSheet("font: 10pt \"양재깨비체B\";")
+        self.namelabel.setStyleSheet("font: 10pt  ;")
         self.namelabel.setText("")
         self.namelabel.setObjectName("namelabel")
         self.warringlabel = QtWidgets.QLabel(Form)
@@ -138,16 +138,16 @@ class Ui_Form(object):
             self.respst.setEnabled(True)
             self.pushButton.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(160, 160, 160);\n"
-"font: 16pt  \"양재깨비체B\";\n"
+"font: 16pt   ;\n"
 "")
 
             self.respst.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(224, 255, 255);\n"
-"font: 10pt  \"양재깨비체B\";\n"
+"font: 10pt   ;\n"
 "")
             self.restcmt.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(224, 255, 255);\n"
-"font: 10pt  \"양재깨비체B\";\n"
+"font: 10pt   ;\n"
 "")
 
 # 게시글 업데이트 버튼  클릭시 처리 루프 시작 
@@ -157,7 +157,7 @@ class Ui_Form(object):
         self.label.setText(str(len(self.pstlist)))
         self.pushButton_2.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(224, 255, 255);\n"
-"font: 16pt  \"양재깨비체B\";\n"
+"font: 16pt   ;\n"
 "")
         self.warringlabel.setText("")
         self.pstflag=True
@@ -169,7 +169,7 @@ class Ui_Form(object):
         self.respst.setEnabled(False)
         self.respst.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(160, 160, 160);\n"
-"font: 10pt  \"양재깨비체B\";\n"
+"font: 10pt   ;\n"
 "")
         t = threading.Thread(target=self.updatepst)
         t.start()
@@ -181,7 +181,7 @@ class Ui_Form(object):
         self.label_2.setText(str(len(self.cmtlist)))
         self.pushButton_2.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(224, 255, 255);\n"
-"font: 16pt  \"양재깨비체B\";\n"
+"font: 16pt   ;\n"
 "")
         self.warringlabel.setText("")
         self.cmtflag=True
@@ -193,7 +193,7 @@ class Ui_Form(object):
         self.restcmt.setEnabled(False)
         self.restcmt.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(160, 160, 160);\n"
-"font: 10pt  \"양재깨비체B\";\n"
+"font: 10pt   ;\n"
 "")
         t = threading.Thread(target=self.updatecmt)
         t.start()
@@ -206,7 +206,7 @@ class Ui_Form(object):
             self.respst.setEnabled(True)
             self.respst.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(254, 255, 255);\n"
-"font: 10pt  \"양재깨비체B\";\n"
+"font: 10pt   ;\n"
 "")
         if self.cmtflag == True: # 댓글 수집완료시
             t = threading.Thread(target=commentdelete, args=(self.id,self.pw,self.cmtlist,self.warringlabel))
@@ -214,7 +214,7 @@ class Ui_Form(object):
             self.restcmt.setEnabled(True)
             self.restcmt.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(254, 255, 255);\n"
-"font: 10pt  \"양재깨비체B\";\n"
+"font: 10pt   ;\n"
 "")
 
 def NormalDel():
