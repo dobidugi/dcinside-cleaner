@@ -8,6 +8,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 import threading 
 
+
+#gui start 
 class Ui_Form(object):
     id = ""
     pw = ""
@@ -119,8 +121,8 @@ class Ui_Form(object):
         self.pushButton_2.setText(_translate("Form", "삭제 시작"))
         self.label_3.setText(_translate("Form", "카카오톡 플러스친구 @피에로 를 추가해주세요"))
         self.label_4.setText(_translate("Form", "친구추가시 여러가지 소식을 받을수 있어요"))
-        self.label_5.setText(_translate("Form", "총 작성글 갯수 "))
-        self.label_6.setText(_translate("Form", "총 댓글 갯수 "))
+        self.label_5.setText(_translate("Form", "총 작성글 개수 "))
+        self.label_6.setText(_translate("Form", "총 댓글 개수 "))
         self.restcmt.setText(_translate("Form", "업데이트"))
         self.respst.setText(_translate("Form", "업데이트"))
 
@@ -129,6 +131,8 @@ class Ui_Form(object):
         self.pw = self.lineEdit_2.text()
         self.cookies , self.id = login(self.id,self.pw,self.namelabel,self.warringlabel)
         if self.cookies != False:
+            self.lineEdit.setDisabled(True)
+            self.lineEdit_2.setDisabled(True)
             self.loginflag = True
             self.restcmt.setEnabled(True)
             self.respst.setEnabled(True)
@@ -227,12 +231,14 @@ def NormalDel():
         #cmtlist, pstlist = boardparse(id,cookies)
         #delete(id,pw,cmtlist=cmtlist,pstlist=pstlist)
 
-
+# gui end 
 if __name__ == "__main__":
     import sys
+    #gui load start 
     app = QtWidgets.QApplication(sys.argv)
     Form = QtWidgets.QWidget()
     ui = Ui_Form()
     ui.setupUi(Form)
     Form.show()
+    #gui load end
     app.exec_()

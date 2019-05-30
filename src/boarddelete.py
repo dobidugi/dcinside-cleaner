@@ -20,15 +20,7 @@ def getUserid(user_id,user_pw):
     data = req.json()
     return data[0]["user_id"]
 
-def getVersion():
-    _url = "http://json2.dcinside.com/json0/app_check_A_rina.php"
-    _hd  = {
-    "User-agent" : "dcinside.app",
-    "Referer" : "http://www.dcinside.com"
-    }
-    req = requests.get(url=_url,headers=_hd)
-    data = req.json()
-    return data[0]['ver']
+
 
 def hashValueToken():
     now = datetime.now()
@@ -38,7 +30,6 @@ def hashValueToken():
 
 def getAppid():
     value_token = hashValueToken()
-    version = getVersion()
     _url = "https://dcid.dcinside.com/join/mobile_app_key_verification_3rd.php"
     _hd  = {
     "User-agent" : "dcinside.app",
@@ -49,7 +40,7 @@ def getAppid():
     "signature" : "ReOo4u96nnv8Njd7707KpYiIVYQ3FlcKHDJE046Pg6s=",
     "pkg" : "com.dcinside.app",
     "vCode" : "30037",
-    "vName" : version
+    "vName" : "3.2.10"
     }
 
     req = requests.post(url=_url,headers=_hd,data=_data)
