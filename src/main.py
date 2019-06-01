@@ -114,7 +114,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "피에로 클리너 v0.8"))
+        Form.setWindowTitle(_translate("Form", "피에로 클리너 v0.8.1"))
         self.lineEdit.setPlaceholderText(_translate("Form", "아이디"))
         self.lineEdit_2.setPlaceholderText(_translate("Form", "비밀번호"))
         self.pushButton.setText(_translate("Form", "로그인"))
@@ -130,7 +130,7 @@ class Ui_Form(object):
 
 
     def timercount(self):
-        sleep(60)
+        sleep(59)
         self.warringlabel.setText("")
         self.loginflag = True
         self.restcmt.setEnabled(True)
@@ -222,7 +222,7 @@ class Ui_Form(object):
 "font: 10pt   ;\n"
 "")
         if self.cmtflag == True: # 댓글 수집완료시
-            t = threading.Thread(target=commentdelete, args=(self.id,self.pw,self.cmtlist,self.warringlabel))
+            t = threading.Thread(target=commentdelete, args=(self.id,self.pw,self.cmtlist,self.warringlabel,self.appid))
             t.start()
             self.restcmt.setEnabled(True)
             self.restcmt.setStyleSheet("background-color: rgb(74, 87, 168);\n"

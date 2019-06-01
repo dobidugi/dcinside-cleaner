@@ -58,6 +58,7 @@ def returnlistcnt(list):
     return len(list)
 
 def main(id,pw,commentlist,label,app_id):
+    print(app_id)
     label.setText("삭제중...")
     onelist = commentlist[int((len(commentlist)/2)):]
     twolist = commentlist[:int((len(commentlist)/2))]

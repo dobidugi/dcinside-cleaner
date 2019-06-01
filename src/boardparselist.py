@@ -23,7 +23,6 @@ def getgallname(id,code,csrf): # gall_code를 gall_name으로 변환시키는 fu
 def appendlist(id,data,list,csrf,gallcodedic):
     for v in data['gallog_list']['data']:
         if v['cid'] in gallcodedic.keys(): # gallcode에 많은요청을보내면 차단을먹어 똑같은값보낼시 딕셔너리참고
-            print(gallcodedic)
             list.append(v['pno']+","+gallcodedic[v['cid']]) # [pno,gall_name] 으로 저장됌
         else:
             gall_name = getgallname(id,v['cid'],csrf)  # gall_code를 gall_name으로 변환

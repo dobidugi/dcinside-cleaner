@@ -56,6 +56,7 @@ def returnlistcnt(list):
     return len(list)
 
 def main(id,pw,boardlist,label,app_id):
+    print(app_id)
     label.setText("삭제중...")
     onelist = boardlist[int((len(boardlist)/2)):]
     twolist = boardlist[:int((len(boardlist)/2))]

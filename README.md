@@ -16,7 +16,7 @@ or
 
 #### **exe파일로 실행**
 
-파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.8>
+파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.8.1>
 
 압축을 해재후 main 폴더 안에 main.exe를 이용해 실행
 
