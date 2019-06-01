@@ -3,6 +3,7 @@ from boardparselist import main as boardparse
 from commentparselist import main as commentparse
 from boarddelete import main as boarddelete
 from commentdelete import main as commentdelete
+from app_id import main as app_id
 from time import sleep
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
@@ -11,6 +12,7 @@ import threading
 
 #gui start 
 class Ui_Form(object):
+    appid = ""
     id = ""
     pw = ""
     cookies = ""
@@ -22,10 +24,10 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(287, 268)
-        Form.setStyleSheet("font: 9pt \"양재백두체B\";")
+        Form.setStyleSheet("font: 9pt ;")
         self.lineEdit = QtWidgets.QLineEdit(Form)
         self.lineEdit.setGeometry(QtCore.QRect(10, 20, 171, 20))
-        self.lineEdit.setStyleSheet("font: 12pt  ;")
+        self.lineEdit.setStyleSheet("font: 9pt  ;")
         self.lineEdit.setInputMask("")
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
@@ -69,11 +71,11 @@ class Ui_Form(object):
         self.pushButton_2.setEnabled(False)
         self.label_3 = QtWidgets.QLabel(Form)
         self.label_3.setGeometry(QtCore.QRect(10, 160, 261, 16))
-        self.label_3.setStyleSheet("font: 11pt  ;")
+        self.label_3.setStyleSheet("font: 9pt  ;")
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(Form)
         self.label_4.setGeometry(QtCore.QRect(10, 190, 261, 16))
-        self.label_4.setStyleSheet("font: 11pt  ;")
+        self.label_4.setStyleSheet("font: 9pt  ;")
         self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(Form)
         self.label_5.setGeometry(QtCore.QRect(10, 82, 91, 20))
@@ -107,12 +109,12 @@ class Ui_Form(object):
         self.respst.setObjectName("respst")
         self.respst.clicked.connect(self.clickpstbtn)
         self.respst.setEnabled(False)
-        self.retranslateUi(Form)
+        self.retranslateUi(Form)    
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "피에로 클리너 v0.6"))
+        Form.setWindowTitle(_translate("Form", "피에로 클리너 v0.8"))
         self.lineEdit.setPlaceholderText(_translate("Form", "아이디"))
         self.lineEdit_2.setPlaceholderText(_translate("Form", "비밀번호"))
         self.pushButton.setText(_translate("Form", "로그인"))
@@ -126,29 +128,40 @@ class Ui_Form(object):
         self.restcmt.setText(_translate("Form", "업데이트"))
         self.respst.setText(_translate("Form", "업데이트"))
 
-    def loginbtn(self):
-        self.id = self.lineEdit.text()
-        self.pw = self.lineEdit_2.text()
-        self.cookies , self.id = login(self.id,self.pw,self.namelabel,self.warringlabel)
-        if self.cookies != False:
-            self.lineEdit.setDisabled(True)
-            self.lineEdit_2.setDisabled(True)
-            self.loginflag = True
-            self.restcmt.setEnabled(True)
-            self.respst.setEnabled(True)
-            self.pushButton.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+
+    def timercount(self):
+        sleep(60)
+        self.warringlabel.setText("")
+        self.loginflag = True
+        self.restcmt.setEnabled(True)
+        self.respst.setEnabled(True)
+        self.pushButton.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(160, 160, 160);\n"
 "font: 16pt   ;\n"
 "")
 
-            self.respst.setStyleSheet("background-color: rgb(74, 87, 168);\n"
+        self.respst.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(224, 255, 255);\n"
 "font: 10pt   ;\n"
 "")
-            self.restcmt.setStyleSheet("background-color: rgb(74, 87, 168);\n"
+        self.restcmt.setStyleSheet("background-color: rgb(74, 87, 168);\n"
 "color: rgb(224, 255, 255);\n"
 "font: 10pt   ;\n"
 "")
+        self.warringlabel.setText("")
+
+
+    def loginbtn(self):
+        self.id = self.lineEdit.text()
+        self.pw = self.lineEdit_2.text()
+        self.cookies , self.id = login(self.id,self.pw,self.namelabel,self.warringlabel)
+        if self.cookies != False: # 로그인 성공시 
+            self.appid = app_id() # 로그인 성공시 app_id 가져옴
+            t = threading.Thread(target=self.timercount)
+            t.start()
+            self.lineEdit.setDisabled(True)
+            self.lineEdit_2.setDisabled(True)
+            self.warringlabel.setText("로그인 성공!!! 60초만 기다려주세요...")
 
 # 게시글 업데이트 버튼  클릭시 처리 루프 시작 
 
@@ -201,7 +214,7 @@ class Ui_Form(object):
 
     def deletestart(self):
         if self.pstflag == True: # 게시글 수집완료시
-            t = threading.Thread(target=boarddelete, args=(self.id,self.pw,self.pstlist,self.warringlabel))
+            t = threading.Thread(target=boarddelete, args=(self.id,self.pw,self.pstlist,self.warringlabel,self.appid))
             t.start()
             self.respst.setEnabled(True)
             self.respst.setStyleSheet("background-color: rgb(74, 87, 168);\n"
@@ -216,20 +229,6 @@ class Ui_Form(object):
 "color: rgb(254, 255, 255);\n"
 "font: 10pt   ;\n"
 "")
-
-def NormalDel():
-    num = 0
-    if(num==1):
-        print("none")
-        #commentdelete(id,pw,cmtlist)
-    elif(num==2):
-        print("none")
-        #boarddelete(id,pw,pstlist)
-
-    elif(num==3):
-        print("none")
-        #cmtlist, pstlist = boardparse(id,cookies)
-        #delete(id,pw,cmtlist=cmtlist,pstlist=pstlist)
 
 # gui end 
 if __name__ == "__main__":

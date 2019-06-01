@@ -54,7 +54,7 @@ def login(id,pw,block_key,suslabel,wrlabel):
 
 def loginchk(res,block_key,suslabel,wrlabel):
     if(len(res.text) == 226):
-        suslabel.setText("안녕하세요")
+        suslabel.setText("사용하기전 공앱은 꼭 종료해주세요!")
         wrlabel.setText(" ")
         return True
     else:

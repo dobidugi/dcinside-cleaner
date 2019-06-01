@@ -7,7 +7,7 @@
 ### 실행 방법
 
 ####  **직접실행**
-######  직접실행시 requests, beautifulsoup4, lxml 모듈이 설치되있어야 정상작동됩니다.
+######  직접실행시 pyqt5, requests, beautifulsoup4, lxml 모듈이 설치되있어야 정상작동됩니다.
 > C:\Users\dobidugi\src> python3 main.py
 
 or 
@@ -16,9 +16,11 @@ or
 
 #### **exe파일로 실행**
 
-파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.7>
+파일 다운받기 : <https://github.com/dobidugi/dcinside-cleaner/releases/tag/v0.8>
 
 압축을 해재후 main 폴더 안에 main.exe를 이용해 실행
+
+프로그램 실행전 꼭 디시인사이드 공앱을 종료시켜주세요.
 
 ![img3](./resource/99.png)
 
@@ -50,6 +52,7 @@ or
     **- CLI환경에서 GUI 환경으로 업그레이드**
     **- 0.5버전에비해 삭제속도 20배증가**
  -  **2019. 5. 30 gallcode_db 생성, 일부버그 수정 (v0.7)**
+ -  **2019. 6. 02 디시인사이드 6.1 패치 대응 (v0.8)**
 -------------------------------------------
 ### 기타 문의사항이나 건의사항은 카카오톡 플러스친구 @피에로 로 연락주세요
 ### http://pf.kakao.com/_CxjluT
